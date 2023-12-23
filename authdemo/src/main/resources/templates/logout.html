@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+</head>
+<body>
+<form method="POST"  th:action="@{/auth/logout}" >
+    <div class="form-group">
+        <label for="my-input">Вы действительно хотите выйти?</label>
+        <input id="my-input" class="btn btn-success" type="submit" value="logout">
+    </div>
+</form>
+</body>
+</html>
