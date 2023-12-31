@@ -24,12 +24,12 @@ public class SecurityConfig {
     @Autowired
     private UserDetailsService userDetailsService;
 
-    //private BasicAuthenticationEntryPoint entryPoint;
+    private AppBasicAuthenticationEntryPoint point;
 
     @Autowired
-    public SecurityConfig(UserDetailsService userDetailsService/* BasicAuthenticationEntryPoint entryPoint*/) {
+    public SecurityConfig(UserDetailsService userDetailsService, AppBasicAuthenticationEntryPoint point) {
         this.userDetailsService = userDetailsService;
-        //this.entryPoint = entryPoint;
+        this.point = point;
     }
 
     @Bean
@@ -47,8 +47,6 @@ public class SecurityConfig {
     }
 
 
-    //NEW CONFIGURATION
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(expressionInterceptUrlRegistry ->
@@ -62,27 +60,6 @@ public class SecurityConfig {
 
 
     }
-
-    //OLD CONFIGURATION
-
-   /*
-
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(expressionInterceptUrlRegistry ->
-                        expressionInterceptUrlRegistry.requestMatchers("/").permitAll()
-                                //.requestMatchers("/test/user").hasAuthority("USER")
-                                //.requestMatchers("/test/root").hasAuthority("ROOT")
-                                .anyRequest().authenticated())
-                .httpBasic().and()
-                .sessionManagement(sess->sess.sessionCreationPolicy((SessionCreationPolicy.STATELESS)));
-        return http.build();
-
-
-    }
-
-
-    */
 
     @Bean
     public PasswordEncoder passwordEncoder() {
