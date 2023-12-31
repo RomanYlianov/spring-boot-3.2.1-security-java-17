@@ -47,6 +47,26 @@ public class SecurityConfig {
     }
 
 
+    //NEW CONFIGURATION
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests(expressionInterceptUrlRegistry ->
+                        expressionInterceptUrlRegistry.requestMatchers("/").permitAll()
+                                //.requestMatchers("/test/user").hasAuthority("USER")
+                                //.requestMatchers("/test/root").hasAuthority("ROOT")
+                                .anyRequest().authenticated())
+                .httpBasic(httpSecurityHttpBasicConfigurer -> httpSecurityHttpBasicConfigurer.authenticationEntryPoint(point))
+                .sessionManagement(sess->sess.sessionCreationPolicy((SessionCreationPolicy.STATELESS)));
+        return http.build();
+
+
+    }
+
+    //OLD CONFIGURATION
+
+   /*
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(expressionInterceptUrlRegistry ->
@@ -60,6 +80,9 @@ public class SecurityConfig {
 
 
     }
+
+
+    */
 
     @Bean
     public PasswordEncoder passwordEncoder() {
